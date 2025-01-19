@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Proyecto1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +123,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+LOGIN_URL = '/login/' #Redirigir al login si un usuario no esta autenticado 
+LOGIN_REDIRECT_URL = '/' #Redirigir tras el login
+LOGIN_REDIRECT_URL = '/' #Redirigir tras el logout

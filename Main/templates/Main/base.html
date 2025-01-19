@@ -10,10 +10,10 @@
         /* Agrandar las flechas del carousel */
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
-            background-color: black;  /* Cambiar el color si es necesario */
-            width: 50px;  /* Aumentar el tamaño de las flechas */
-            height: 50px; /* Aumentar el tamaño de las flechas */
-            background-size: 30px 30px; /* Ajustar el tamaño del ícono dentro de la flecha */
+            background-color: black;  
+            width: 50px;  
+            height: 50px; 
+            background-size: 30px 30px; 
         }
     </style>
 </head>
@@ -37,11 +37,23 @@
                     <a class="nav-link" href="{% url 'blog:leyenda_list' %}">Leyendas</a>
                 </li>
             </ul>
+            
+            <!-- Bloque de autenticación, alineado a la derecha -->
+            <div class="ms-auto">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'Main:logout' %}" class="form-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav-link" style="border: none; padding: 0;">Cerrar Sesión</button>
+                    </form>
+                {% else %}
+                    <a class="nav-link" href="{% url 'Main:login' %}">Iniciar Sesión</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
 
     <!-- Contenedor principal con el margen superior ajustado -->
-    <div class="container mt-5 pt-4">  <!-- Aquí se agregaron las clases 'mt-5 pt-4' -->
+    <div class="container mt-5 pt-4">  
         <h1 class="mb-4">
             {% block content_title %}
             {% endblock content_title %}

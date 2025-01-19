@@ -1,0 +1,36 @@
+{% extends 'Main/base.html' %}
+
+{% block title %}
+    Iniciar sesión | El cielo de las guitarras
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-dark text-white">
+                    <h3>Iniciar sesión</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Nombre de usuario</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100 mt-3">Iniciar sesión</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>¿No tienes cuenta? <<a href="{% url 'Main:registro' %}">Regístrate aquí</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
