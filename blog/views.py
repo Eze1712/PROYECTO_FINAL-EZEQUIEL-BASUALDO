@@ -42,12 +42,12 @@ def comentario_create(request, post_id):
         if form.is_valid():
             comentario = form.save(commit=False)
             if request.user.is_authenticated:
-                comentario.usuario = request.user 
+                comentario.usuario = request.user  
                 comentario.post = post  
                 comentario.save()
                 return redirect('blog:post_list')  
             else:
-                form.add_error(None, "Debes estar logueado para comentar")
+                form.add_error(None, "Debes estar logueado para comentar")  
     else:
         form = ComentarioForm()
 

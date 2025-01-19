@@ -13,6 +13,7 @@
     {% csrf_token %}
     <div class="mb-3">
         {{ form.as_p }}  
+        <!-- El campo de usuario ya no es necesario, lo asignaremos automáticamente en la vista -->
     </div>
     <button type="submit" class="btn btn-primary">Enviar comentario</button>
     <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Cancelar</a>
