@@ -1,0 +1,22 @@
+{% extends "Main/base.html" %}
+
+{% block title %}
+  Confirmar eliminación
+{% endblock title %}
+
+{% block content_title %}
+  Confirmar eliminación del post
+{% endblock content_title %}
+
+{% block content %}
+  <h3>¿Estás seguro de que quieres eliminar este post?</h3>
+  <p><strong>{{ object.titulo }}</strong></p>
+  <p>{{ object.contenido }}</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+  </form>
+
+  <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Cancelar</a>
+{% endblock content %}

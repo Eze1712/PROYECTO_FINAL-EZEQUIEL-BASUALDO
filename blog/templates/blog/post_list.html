@@ -51,6 +51,9 @@
 
         <!-- Enlace para agregar un comentario -->
         <a href="{% url 'blog:comentario_create' post.id %}" class="btn btn-link">Agregar comentario</a>
+
+        <!-- Enlace para eliminar el post -->
+        <a href="{% url 'blog:post_delete' post.pk %}" class="btn btn-danger mt-2" onclick="return confirm('¿Estás seguro de que quieres eliminar este post?')">Eliminar</a>
       </li>
     {% endfor %}
   </ul>

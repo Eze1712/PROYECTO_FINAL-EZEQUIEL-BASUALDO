@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required  # Importamos el decorador para usuarios logueados
 from .models import Post, Comentario, Leyenda
 from .forms import PostForm, ComentarioForm, LeyendaForm
+from django.views.generic import DeleteView
+from django.urls import reverse_lazy
 
 def post_list(request):
     query = request.GET.get('q', '')  
@@ -71,3 +73,14 @@ def leyenda_create(request):
 def leyenda_list(request):
     leyendas = Leyenda.objects.all()  
     return render(request, 'blog/leyenda_list.html', {'leyendas': leyendas})
+
+
+
+# --------------------------------------- CRUD
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'blog/post_delete.html' 
+    success_url = reverse_lazy('blog:post_list')  
+    
+  
