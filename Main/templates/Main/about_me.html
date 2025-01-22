@@ -1,0 +1,32 @@
+{% extends "Main/base.html" %}
+
+{% load static %}  <!-- Agrega esta línea para cargar el tag static -->
+
+{% block title %}
+    Sobre mí | El cielo de las guitarras
+{% endblock title %}
+
+{% block content_title %}
+    Conoce al creador
+{% endblock content_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Imagen del creador -->
+            <img src="{% static 'imagenes/Eze.jpg' %}" class="img-fluid rounded-circle" alt="Foto del creador">
+        </div>
+        <div class="col-md-8">
+            <h2>¡Hola! Soy Ezequiel Francisco Baualdo</h2>
+            <p>
+                Bienvenidos a "El cielo de las guitarras". Soy un apasionado de la música y las guitarras sobre todo. Soy contador público, y tengo 28 años.
+                <br> Este blog está dedicado a crear una comunidad de músicos que toquen guitarra o bajo. Aquí encontrarás consejos y experiencias, música y mucho más. ¡Espero que disfrutes del contenido!
+            </p>
+            <!-- Redes sociales personales -->
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/in/ezequiel-francisco-basualdo-31387816b/" target="_blank" class="btn btn-primary me-2">LinkedIn</a>
+                <a href="https://github.com/Eze1712" target="_blank" class="btn btn-dark">GitHub</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

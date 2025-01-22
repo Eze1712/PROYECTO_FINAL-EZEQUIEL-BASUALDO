@@ -11,3 +11,7 @@ def index(request):
 # Vista para registrar un nuevo usuario
 def registro(request):
     return render(request, 'Main/registro.html')
+
+# Vista para mostrar la página "About Me" 
+def about_me(request):
+    return render(request, 'Main/about_me.html')
