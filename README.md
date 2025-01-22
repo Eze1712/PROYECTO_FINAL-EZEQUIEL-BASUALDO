@@ -1,4 +1,4 @@
-# PROYECTO FINAL !!
+# PROYECTO FINAL !
 # Soy Ezequiel Basualdo, y presento aqui la tercer entrega de mi cursada de Python para Coder House.
 # Se presenta en esta tercer entrega un proyecto de blog para que guitarristas y bajistas de todo tipo comenten sus experiencias en el mundo de la música o sus pensamientos creando asi una comunidad. Tambien hay una seccion de Leyendas donde se podrá ver diferentes artista de la historia junto a su información personal. 
 
