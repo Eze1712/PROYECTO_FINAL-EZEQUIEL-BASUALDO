@@ -14,7 +14,7 @@ class Post(models.Model):
     titulo = models.CharField(max_length=100)
     contenido = models.TextField()
     fecha_publicacion = models.DateTimeField(auto_now_add=True)
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Permitimos que sea nulo
     estado = models.CharField(max_length=1, choices=Estado.choices, default=Estado.BORRADOR)
     categoria = models.CharField(max_length=1, choices=CategoriaInstrumento.choices, default=CategoriaInstrumento.GUITARRA)  # Campo para la categoría
 
@@ -23,13 +23,20 @@ class Post(models.Model):
 
 # Modelo para los comentarios de los posts
 class Comentario(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    usuario = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        null=True,  
+        blank=True,  
+        default=None  
+    )
     contenido = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comentarios")
 
     def __str__(self):
-        return f"Comentario de {self.usuario.username} en {self.post.titulo}"
+        return f"Comentario de {self.usuario.username if self.usuario else 'Anónimo'} en {self.post.titulo}"
+
 
 # Modelo para Leyenda
 class Leyenda(models.Model):

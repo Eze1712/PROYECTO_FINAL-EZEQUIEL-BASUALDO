@@ -1,0 +1,27 @@
+{% extends "Main/base.html" %}
+{% load static %}
+
+<title>
+    {% block title %}Detalles de la Leyenda{% endblock %}
+</title>
+
+{% block content_title %}Detalles de la Leyenda{% endblock content_title %}
+
+{% block content %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>{{ leyenda.nombre }}</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Género:</strong> {{ leyenda.genero }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ leyenda.fecha_nacimiento }}</p>
+            <p><strong>Historia:</strong></p>
+            <p>{{ leyenda.historia }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{% url 'blog:leyenda_list' %}" class="btn btn-secondary">Volver a la lista</a>
+            <a href="{% url 'blog:leyenda_update' leyenda.pk %}" class="btn btn-warning">Editar</a>
+            <a href="{% url 'blog:leyenda_delete' leyenda.pk %}" class="btn btn-danger">Eliminar</a>
+        </div>
+    </div>
+{% endblock content %}

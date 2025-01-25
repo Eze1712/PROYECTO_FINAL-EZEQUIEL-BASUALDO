@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required  
 from .models import Post, Comentario, Leyenda
 from .forms import PostForm, ComentarioForm, LeyendaForm
-from django.views.generic import DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 # Muestra una lista de publicaciones
@@ -24,16 +24,14 @@ def post_create(request):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            if request.user.is_authenticated:
-                post.autor = request.user
-                post.save()
-                return redirect("blog:post_list")
-            else:
-                form.add_error(None, "Debes estar logueado para crear una publicación")
+            post = form.save(commit=False)  
+            post.usuario = request.user 
+            post.save()  
+            return redirect('blog:post_list')
     else:
         form = PostForm()
-    return render(request, 'blog/post_create.html', {"form": form})
+    return render(request, 'blog/post_create.html', {'form': form})
+
 
 # Permite crear un comentario en una publicación específica
 def comentario_create(request, post_id):
@@ -42,43 +40,81 @@ def comentario_create(request, post_id):
         form = ComentarioForm(request.POST)
         if form.is_valid():
             comentario = form.save(commit=False)
+            
             if request.user.is_authenticated:
                 comentario.usuario = request.user
-                comentario.post = post
-                comentario.save()
-                return redirect('blog:post_list')
-            else:
-                form.add_error(None, "Debes estar logueado para comentar")
+            
+            comentario.post = post
+            comentario.save()
+            return redirect('blog:post_list')
     else:
         form = ComentarioForm()
+    
     return render(request, 'blog/comentario_create.html', {"form": form, "post": post})
+
 
 # Permite crear una nueva leyenda
 def leyenda_create(request):
     if request.method == "POST":
         form = LeyendaForm(request.POST)
         if form.is_valid():
-            leyenda = form.save(commit=False)
-            if request.user.is_authenticated:
-                leyenda.usuario = request.user
-                leyenda.save()
-                return redirect('blog:leyenda_list')
-            else:
-                form.add_error(None, "Debes estar logueado para crear una leyenda")
+            leyenda = form.save(commit=False)  # No guarda inmediatamente
+            leyenda.usuario = request.user  # Asigna el usuario autenticado automáticamente
+            leyenda.save()  # Guarda la leyenda en la base de datos
+            return redirect('blog:leyenda_list')
     else:
         form = LeyendaForm()
     return render(request, 'blog/leyenda_create.html', {'form': form})
+
 
 # Muestra una lista de leyendas creadas
 def leyenda_list(request):
     leyendas = Leyenda.objects.all()
     return render(request, 'blog/leyenda_list.html', {'leyendas': leyendas})
 
-# Vista para eliminar publicaciones específicas
+# Vista para eliminar blogs específicos
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('blog:post_list')
+    
+
+
+#CRUD PARA LEYENDAS
+# Lista todas las leyendas creadas
+class LeyendaListView(ListView):
+    model = Leyenda
+    template_name = 'leyenda_list.html'
+    context_object_name = 'leyendas'
+
+# Muestra los detalles de una leyenda específica
+class LeyendaDetailView(DetailView):
+    model = Leyenda
+    template_name = 'blog/leyenda_detail.html'
+    context_object_name = 'leyenda'
+
+# Permite crear una nueva leyenda
+class LeyendaCreateView(CreateView):
+    model = Leyenda
+    template_name = 'leyenda_create.html'
+    fields = ['titulo', 'contenido', 'autor']
+    success_url = reverse_lazy('leyenda_list')
+
+# Permite actualizar una leyenda existente
+class LeyendaUpdateView(UpdateView):
+    model = Leyenda
+    template_name = 'blog/leyenda_update.html'
+    fields = ['nombre', 'fecha_nacimiento', 'genero', 'historia']  
+    success_url = reverse_lazy('blog:leyenda_list')  
+
+# Permite eliminar una leyenda existente
+class LeyendaDeleteView(DeleteView):
+    model = Leyenda
+    template_name = 'blog/leyenda_delete.html'
+    context_object_name = 'leyenda'  
+    success_url = reverse_lazy('blog:leyenda_list')
+
+
 
 
 

@@ -6,15 +6,25 @@
 
 {% block content %}
 
+    <!-- Botón para agregar una nueva leyenda -->
     <a href="{% url 'blog:leyenda_create' %}" class="btn btn-primary mb-4">Agregar nueva leyenda</a>
 
     <!-- Lista de leyendas -->
-    <ul class="list-group mt-4">
-        {% for leyenda in leyendas %}
-            <li class="list-group-item">
-                <strong>{{ leyenda.nombre }}</strong> ({{ leyenda.genero }}) - {{ leyenda.fecha_nacimiento }}
-                <p>{{ leyenda.historia }}</p>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if leyendas %}
+        <ul class="list-group mt-4">
+            {% for leyenda in leyendas %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ leyenda.nombre }}</strong> <!-- Solo el nombre de la leyenda -->
+                    </div>
+                    <!-- Botón para ver detalles -->
+                    <a href="{% url 'blog:leyenda_detail' leyenda.pk %}" class="btn btn-secondary">Ver detalles</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <!-- Mensaje si no hay leyendas -->
+        <p class="text-muted">No hay leyendas disponibles por el momento. ¡Sé el primero en crear una!</p>
+    {% endif %}
+
 {% endblock content %}

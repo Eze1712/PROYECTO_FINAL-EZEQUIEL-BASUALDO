@@ -1,0 +1,25 @@
+{% extends 'Main/base.html' %}
+
+{% block title %}Eliminar Leyenda{% endblock title %}
+
+{% block content_title %}Eliminar Leyenda{% endblock content_title %}
+
+{% block content %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>¿Estás seguro de que deseas eliminar esta leyenda?</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre:</strong> {{ leyenda.nombre }}</p>
+            <p><strong>Género:</strong> {{ leyenda.genero }}</p>
+            <p><strong>Fecha de nacimiento:</strong> {{ leyenda.fecha_nacimiento }}</p>
+            <p><strong>Historia:</strong> {{ leyenda.historia }}</p>
+
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a href="{% url 'blog:leyenda_list' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

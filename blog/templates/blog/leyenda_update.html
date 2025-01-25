@@ -1,0 +1,23 @@
+{% extends 'Main/base.html' %}
+
+{% block title %}Editar Leyenda{% endblock title %}
+
+{% block content_title %}Editar Leyenda{% endblock content_title %}
+
+{% block content %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Editar Leyenda: {{ leyenda.nombre }}</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <a href="{% url 'blog:leyenda_list' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
