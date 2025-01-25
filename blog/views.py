@@ -4,6 +4,8 @@ from .models import Post, Comentario, Leyenda
 from .forms import PostForm, ComentarioForm, LeyendaForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.db.models import Q
+
 
 # Muestra una lista de publicaciones
 def post_list(request):
