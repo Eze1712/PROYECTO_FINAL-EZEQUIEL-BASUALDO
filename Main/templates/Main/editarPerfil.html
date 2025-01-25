@@ -1,0 +1,22 @@
+{% extends "Main/index.html" %}
+
+{% block titulo %}Editar Perfil{% endblock %}
+
+{% block cuerpo %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4 rounded" style="width: 28rem; background-color: #ffffff;">
+        <h2 class="text-center mb-4 text-primary">Editar Perfil</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ miFormulario.as_p }}
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
+            </div>
+        </form>
+        <hr class="my-4">
+        <div class="text-center">
+            <a href="{% url 'Main:index' %}" class="btn btn-secondary w-100">Cancelar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
