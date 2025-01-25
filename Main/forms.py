@@ -1,14 +1,15 @@
-
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
-class CustomUserCreationFm(UserCreationForm):
-    first_name = forms.CharField(max_length=100, required=True, label="Nombre")
-    last_name = forms.CharField(max_length=100, required=True, label="Apellido")
-    email = forms.EmailField(max_length=100, required=True, label="Correo Electrónico")
-    birth_date = forms.DateField(required=True, label="Fecha de Nacimiento", widget=forms.SelectDateWidget(years=range(1900, 2025)))
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Ingrese su nombre'}))
+    last_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Ingrese su apellido'}))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Ingrese su correo electrónico'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese una contraseña segura'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirme su contraseña'}))
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'birth_date', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
+

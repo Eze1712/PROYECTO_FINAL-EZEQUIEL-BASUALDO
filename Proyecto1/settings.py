@@ -135,3 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/' #Redirigir al login si un usuario no esta autenticado 
 LOGIN_REDIRECT_URL = '/' #Redirigir tras el login
 LOGIN_REDIRECT_URL = '/' #Redirigir tras el logout
+
+
+
+CSRF_COOKIE_SECURE = False  # Si estás en desarrollo, debe estar en False
+CSRF_COOKIE_HTTPONLY = True

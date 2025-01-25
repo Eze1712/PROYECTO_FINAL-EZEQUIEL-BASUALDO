@@ -8,18 +8,7 @@
             <h2 class="text-center mb-4 text-success">Crear Cuenta</h2>
             <form method="post" novalidate>
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label for="id_username" class="form-label">Nombre de Usuario</label>
-                    <input type="text" name="username" class="form-control" id="id_username" placeholder="Ingrese su nombre de usuario">
-                </div>
-                <div class="mb-3">
-                    <label for="id_password1" class="form-label">Contraseña</label>
-                    <input type="password" name="password1" class="form-control" id="id_password1" placeholder="Ingrese una contraseña segura">
-                </div>
-                <div class="mb-3">
-                    <label for="id_password2" class="form-label">Confirmar Contraseña</label>
-                    <input type="password" name="password2" class="form-control" id="id_password2" placeholder="Confirme su contraseña">
-                </div>
+                {{ form.as_p }}  <!-- Esto genera el formulario automáticamente con los campos definidos en el formulario de Django -->
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-success w-100">Registrar</button>
                 </div>
