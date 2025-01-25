@@ -97,6 +97,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Main:about_me' %}">Sobre mí</a>
                 </li>
+                </li>
+                <a class="nav-link" href="{% url 'Main:editarPerfil' %}">Editar Perfil</a>
+                </li>
             </ul>
             <div class="ms-auto">
                 {% if user.is_authenticated %}

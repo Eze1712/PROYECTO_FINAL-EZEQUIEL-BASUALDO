@@ -27,6 +27,10 @@
             <div class="text-center mt-3">
                 <p>¿No tienes cuenta? <a href="{% url 'Main:register' %}" class="text-success">Regístrate aquí</a></p>
             </div>
+            <!-- Botón para redirigir al índice -->
+            <div class="text-center mt-3">
+                <a href="{% url 'Main:index' %}" class="btn btn-secondary w-100">Volver al inicio</a>
+            </div>
             {% endblock %}
         </div>
     </div>
