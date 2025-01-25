@@ -1,16 +1,33 @@
-{% block titulo %}Registro de usuarios{% endblock %}
+{% extends "Main/login.html" %}
+
+{% block titulo %}Registro de Usuario{% endblock %}
 
 {% block cuerpo %}
-<div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4 rounded" style="width: 30rem; background-color: #f8f9fa;">
-        <h1 class="text-center mb-4">Registrar Usuario</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg p-4 rounded" style="width: 28rem; background-color: #ffffff;">
+            <h2 class="text-center mb-4 text-success">Crear Cuenta</h2>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Nombre de Usuario</label>
+                    <input type="text" name="username" class="form-control" id="id_username" placeholder="Ingrese su nombre de usuario">
+                </div>
+                <div class="mb-3">
+                    <label for="id_password1" class="form-label">Contraseña</label>
+                    <input type="password" name="password1" class="form-control" id="id_password1" placeholder="Ingrese una contraseña segura">
+                </div>
+                <div class="mb-3">
+                    <label for="id_password2" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" name="password2" class="form-control" id="id_password2" placeholder="Confirme su contraseña">
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success w-100">Registrar</button>
+                </div>
+            </form>
+            <hr class="my-4">
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Registrar</button>
+                <p class="mb-0">¿Ya tienes una cuenta? <a href="{% url 'Main:login' %}" class="text-success">Inicia Sesión</a></p>
             </div>
-        </form>
+        </div>
     </div>
-</div>
 {% endblock %}
