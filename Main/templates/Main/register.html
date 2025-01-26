@@ -5,7 +5,7 @@
 {% block header %}
     <style>
         header {
-            margin-bottom: 3rem; /* Añade espacio entre el título y el contenido */
+            margin-bottom: 5.5rem; /* Añade espacio entre el título y el contenido */
         }
     </style>
     <h1 class="text-center text-success">Registro de Usuario</h1>
@@ -25,6 +25,10 @@
             <hr class="my-4">
             <div class="text-center">
                 <p class="mb-0">¿Ya tienes una cuenta? <a href="{% url 'Main:login' %}" class="text-success">Inicia Sesión</a></p>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <a href="{% url 'Main:index' %}" class="btn btn-outline-success w-100">Volver al inicio</a>
             </div>
         </div>
     </div>
