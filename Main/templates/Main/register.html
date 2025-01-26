@@ -1,14 +1,23 @@
 {% extends "Main/login.html" %}
 
-{% block titulo %}Registro de Usuario{% endblock %}
+{% block title %}Registro de Usuario{% endblock title %}
+
+{% block header %}
+    <style>
+        header {
+            margin-bottom: 3rem; /* Añade espacio entre el título y el contenido */
+        }
+    </style>
+    <h1 class="text-center text-success">Registro de Usuario</h1>
+{% endblock header %}
 
 {% block cuerpo %}
     <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="card shadow-lg p-4 rounded" style="width: 28rem; background-color: #ffffff;">
+        <div class="card shadow-lg p-4 rounded" style="width: 28rem; background-color: #ffffff; z-index: 10;">
             <h2 class="text-center mb-4 text-success">Crear Cuenta</h2>
             <form method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
-                {{ form.as_p }}  <!-- Esto genera el formulario automáticamente con los campos definidos en el formulario de Django -->
+                {{ form.as_p }}
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-success w-100">Registrar</button>
                 </div>
@@ -19,4 +28,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
+{% endblock cuerpo %}
