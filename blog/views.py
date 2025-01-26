@@ -268,8 +268,7 @@ class AlbumDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         album = self.get_object()
 
-        # Verificar si el usuario es el autor del álbum
-        if album.autor_album != self.request.user:
+        if album.autor != self.request.user:
             context['error_message'] = "No tienes permiso para eliminar este álbum."
             return context
         
@@ -278,7 +277,7 @@ class AlbumDeleteView(DeleteView):
     def post(self, request, *args, **kwargs):
         album = self.get_object()
 
-        if album.autor_album != request.user:
+        if album.autor != request.user:
             return redirect('blog:album_list')
 
         return super().post(request, *args, **kwargs)
