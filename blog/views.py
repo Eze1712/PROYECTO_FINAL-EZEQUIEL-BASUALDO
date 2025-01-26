@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 
 
-# Muestra una lista de publicaciones
+# ============================= PUBLICACIONES(POSTS)=========================================================
 def post_list(request):
     query = request.GET.get('q', '')
     if query:
@@ -29,54 +29,14 @@ def post_create(request):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)  
-            post.usuario = request.user 
+            post.autor = request.user 
             post.save()  
             return redirect('blog:post_list')
     else:
         form = PostForm()
     return render(request, 'blog/post_create.html', {'form': form})
 
-
-# Permite crear un comentario en una publicación específica
-def comentario_create(request, post_id):
-    post = Post.objects.get(id=post_id)
-    if request.method == "POST":
-        form = ComentarioForm(request.POST)
-        if form.is_valid():
-            comentario = form.save(commit=False)
-            
-            if request.user.is_authenticated:
-                comentario.usuario = request.user
-            
-            comentario.post = post
-            comentario.save()
-            return redirect('blog:post_list')
-    else:
-        form = ComentarioForm()
-    
-    return render(request, 'blog/comentario_create.html', {"form": form, "post": post})
-
-
-# Permite crear una nueva leyenda
-def leyenda_create(request):
-    if request.method == "POST":
-        form = LeyendaForm(request.POST)
-        if form.is_valid():
-            leyenda = form.save(commit=False)  # No guarda inmediatamente
-            leyenda.usuario = request.user  # Asigna el usuario autenticado automáticamente
-            leyenda.save()  # Guarda la leyenda en la base de datos
-            return redirect('blog:leyenda_list')
-    else:
-        form = LeyendaForm()
-    return render(request, 'blog/leyenda_create.html', {'form': form})
-
-
-# Muestra una lista de leyendas creadas
-def leyenda_list(request):
-    leyendas = Leyenda.objects.all()
-    return render(request, 'blog/leyenda_list.html', {'leyendas': leyendas})
-
-# Vista para eliminar blogs específicos
+# ========================CRUD PARA POSTS=========================================================
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
@@ -99,10 +59,52 @@ class PostDeleteView(DeleteView):
             return redirect('blog:post_list')
         
         return super().post(request, *args, **kwargs)
-
     
+    
+# ============================= COMENTARIOS DE LOS POSTS=========================================================
 
-#CRUD PARA LEYENDAS
+# Permite crear un comentario en una publicación específica
+def comentario_create(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if request.method == "POST":
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            
+            if request.user.is_authenticated:
+                comentario.usuario = request.user
+            
+            comentario.post = post
+            comentario.save()
+            return redirect('blog:post_list')
+    else:
+        form = ComentarioForm()
+    
+    return render(request, 'blog/comentario_create.html', {"form": form, "post": post})
+
+
+
+
+# ======================== LEYENDAS=========================================================
+def leyenda_create(request):
+    if request.method == "POST":
+        form = LeyendaForm(request.POST)
+        if form.is_valid():
+            leyenda = form.save(commit=False)  # No guarda inmediatamente
+            leyenda.usuario = request.user  # Asigna el usuario autenticado automáticamente
+            leyenda.save()  # Guarda la leyenda en la base de datos
+            return redirect('blog:leyenda_list')
+    else:
+        form = LeyendaForm()
+    return render(request, 'blog/leyenda_create.html', {'form': form})
+
+
+# Muestra una lista de leyendas creadas
+def leyenda_list(request):
+    leyendas = Leyenda.objects.all()
+    return render(request, 'blog/leyenda_list.html', {'leyendas': leyendas})
+
+# ========================CRUD PARA LEYENDAS=========================================================
 # Lista todas las leyendas creadas
 class LeyendaListView(ListView):
     model = Leyenda
