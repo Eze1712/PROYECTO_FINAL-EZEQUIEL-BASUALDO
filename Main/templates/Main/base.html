@@ -100,6 +100,15 @@
                 </li>
                 <a class="nav-link" href="{% url 'Main:editarPerfil' %}">Editar Perfil</a>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <img src="{{ user.profile.avatar.url|default:'/media/avatars/default.jpg' }}" 
+                        alt="Avatar" 
+                        class="rounded-circle" 
+                        width="40" 
+                        height="40">
+                </li>
+                {% endif %}
             </ul>
             <div class="ms-auto">
                 {% if user.is_authenticated %}

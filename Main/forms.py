@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import *
 
 #Form para crear usuario en register
 class CustomUserCreationForm(UserCreationForm):
@@ -10,11 +11,27 @@ class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Ingrese su correo electrónico'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese una contraseña segura'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirme su contraseña'}))
+    avatar = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'accept': 'image/*'}))  # Campo de avatar
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
-        
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'avatar']  # Agregar avatar a los campos
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+            # Crear el perfil asociado al usuario
+            profile = Profile.objects.create(user=user)
+            if self.cleaned_data.get('avatar'):
+                profile.avatar = self.cleaned_data['avatar']
+                profile.save()  # Guardar el perfil con el avatar
+        return user
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['avatar']
 
 
 #Form para modificar usuario

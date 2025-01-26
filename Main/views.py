@@ -43,24 +43,26 @@ def register(request):
 @login_required
 def editarPerfil(request):
     usuario = request.user
+    try:
+        perfil = usuario.profile
+    except Profile.DoesNotExist:
+        perfil = Profile.objects.create(user=usuario)
 
     if request.method == 'POST':
-        miFormulario = UserEditForm(request.POST, instance=usuario)
-        if miFormulario.is_valid():
-            informacion = miFormulario.cleaned_data
-            usuario.email = informacion['email']
-            usuario.first_name = informacion['first_name']
-            usuario.last_name = informacion['last_name']
+        user_form = UserEditForm(request.POST, instance=usuario)
+        profile_form = ProfileEditForm(request.POST, request.FILES, instance=perfil)
 
-            if informacion.get('password1') and informacion['password1'] == informacion['password2']:
-                usuario.set_password(informacion['password1'])
-
-            usuario.save()
-
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
             messages.success(request, 'Perfil actualizado correctamente.')
             return redirect('Main:index')
-
     else:
-        miFormulario = UserEditForm(instance=usuario)
+        user_form = UserEditForm(instance=usuario)
+        profile_form = ProfileEditForm(instance=perfil)
 
-    return render(request, 'Main/editarPerfil.html', {"miFormulario": miFormulario, "usuario": usuario})
+    return render(request, "Main/editarPerfil.html", {
+        "user_form": user_form,
+        "profile_form": profile_form,
+        "usuario": usuario
+    })
