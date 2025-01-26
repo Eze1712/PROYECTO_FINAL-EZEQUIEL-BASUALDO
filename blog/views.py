@@ -179,28 +179,6 @@ class LeyendaDeleteView(DeleteView):
 
 
 #====================================== ALBUMES VISTAS =========================================
-# Vista de creación de álbumes
-def album_create(request):
-    if request.method == 'POST':
-        form = AlbumForm(request.POST)
-        if form.is_valid():
-            album = form.save(commit=False)
-            album.usuario = request.user  
-            album.save()
-            return redirect('blog:album_list')  
-    else:
-        form = AlbumForm()
-
-    return render(request, 'blog/album_create.html', {'form': form})
-
-
-# Vista de lista de albumes
-def album_list(request):
-    albums = Album.objects.all()  # Obtener todos los álbumes
-    return render(request, 'blog/album_list.html', {'albums': albums})
-
-
-#====================================== CRUD PARA ÁLBUMES =========================================
 # Lista todos los álbumes creados
 class AlbumListView(ListView):
     model = Album

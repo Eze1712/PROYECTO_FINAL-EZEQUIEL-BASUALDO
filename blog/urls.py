@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import AlbumListView, AlbumDetailView, AlbumCreateView, AlbumUpdateView, AlbumDeleteView
 
 app_name = "blog"
 
@@ -13,8 +14,8 @@ urlpatterns = [
     path('leyendas/<int:pk>/', views.LeyendaDetailView.as_view(), name='leyenda_detail'),  
     path('leyendas/<int:pk>/update/', views.LeyendaUpdateView.as_view(), name='leyenda_update'),  
     path('leyendas/<int:pk>/delete/', views.LeyendaDeleteView.as_view(), name='leyenda_delete'),
-    path('albums/', views.album_list, name='album_list'),  
-    path('create-album/', views.album_create, name='album_create'),
+    path('albums/', AlbumListView.as_view(), name='album_list'),  
+    path('albums/create/', AlbumCreateView.as_view(), name='album_create'),
     path('album/<int:pk>/', views.AlbumDetailView.as_view(), name='album_detail'),
     path('album/<int:pk>/edit/', views.AlbumUpdateView.as_view(), name='album_update'),
     path('album/<int:pk>/delete/', views.AlbumDeleteView.as_view(), name='album_delete'),
