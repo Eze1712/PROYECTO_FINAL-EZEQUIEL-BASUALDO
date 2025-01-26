@@ -1,4 +1,4 @@
-{% extends 'Main/base.html' %}
+{% extends "Main/base.html" %}
 
 {% block title %}Editar Leyenda{% endblock title %}
 
@@ -10,6 +10,11 @@
             <h2>Editar Leyenda: {{ leyenda.nombre }}</h2>
         </div>
         <div class="card-body">
+            {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error_message }}
+                </div>
+            {% endif %}
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
