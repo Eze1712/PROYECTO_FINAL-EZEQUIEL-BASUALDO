@@ -141,20 +141,25 @@ class LeyendaDeleteView(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         leyenda = self.get_object()
-        
+
+        # Verifica que el usuario tenga permiso para eliminar la leyenda
         if leyenda.autor != self.request.user:
             context['error_message'] = "No tienes permiso para eliminar esta leyenda."
             return context
-        
+
+        # Si el usuario es el autor, solo mostramos la confirmación de eliminación
+        context['confirm_message'] = f"¿Estás seguro de que deseas eliminar '{leyenda.nombre}'?"
         return context
 
     def post(self, request, *args, **kwargs):
         leyenda = self.get_object()
-        
+
+        # Verifica que el autor está intentando eliminar su propia leyenda
         if leyenda.autor != request.user:
             return redirect('blog:leyenda_list')
-        
+
         return super().post(request, *args, **kwargs)
+
 
 
 #====================================== ALBUMES VISTAS =========================================
@@ -229,12 +234,14 @@ class AlbumDeleteView(DeleteView):
             context['error_message'] = "No tienes permiso para eliminar este álbum."
             return context
         
+        context['confirm_message'] = f"¿Estás seguro de que deseas eliminar el álbum '{album.nombre}'?"
         return context
 
     def post(self, request, *args, **kwargs):
         album = self.get_object()
-
+        
         if album.autor != request.user:
             return redirect('blog:album_list')
 
         return super().post(request, *args, **kwargs)
+

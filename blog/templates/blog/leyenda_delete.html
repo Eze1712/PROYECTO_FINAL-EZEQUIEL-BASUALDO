@@ -1,16 +1,19 @@
 {% extends "Main/base.html" %}
-{% load static %}
 
-<title>
-    {% block title %}Confirmar eliminación{% endblock %}
-</title>
+{% block title %}Confirmar eliminación{% endblock %}
 
-{% block content_title %}Confirmar eliminación de la Leyenda{% endblock content_title %}
+{% block content_title %}Confirmar eliminación de la Leyenda{% endblock %}
 
 {% block content %}
     {% if error_message %}
         <div class="alert alert-danger">
             <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+    
+    {% if confirm_message %}
+        <div class="alert alert-warning">
+            <p>{{ confirm_message }}</p>
         </div>
     {% endif %}
     
@@ -33,4 +36,4 @@
             </form>
         </div>
     </div>
-{% endblock content %}
+{% endblock %}
