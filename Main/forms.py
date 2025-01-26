@@ -11,11 +11,11 @@ class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Ingrese su correo electrónico'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese una contraseña segura'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirme su contraseña'}))
-    avatar = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'accept': 'image/*'}))  # Campo de avatar
+    
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'avatar']  # Agregar avatar a los campos
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']  # Agregar avatar a los campos
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -42,7 +42,7 @@ class UserEditForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')

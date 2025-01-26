@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-center align-items-center vh-100">
         <div class="card shadow-lg p-4 rounded" style="width: 28rem; background-color: #ffffff;">
             <h2 class="text-center mb-4 text-success">Crear Cuenta</h2>
-            <form method="post" novalidate>
+            <form method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
                 {{ form.as_p }}  <!-- Esto genera el formulario automáticamente con los campos definidos en el formulario de Django -->
                 <div class="text-center mt-4">

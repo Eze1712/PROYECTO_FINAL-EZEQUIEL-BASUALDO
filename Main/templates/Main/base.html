@@ -71,7 +71,6 @@
             color: white;
             font-weight: bold;
         }
-
     </style>
 </head>
 <body>
@@ -97,17 +96,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Main:about_me' %}">Sobre mí</a>
                 </li>
-                </li>
-                <a class="nav-link" href="{% url 'Main:editarPerfil' %}">Editar Perfil</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Main:editarPerfil' %}">Editar Perfil</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <img src="{{ user.profile.avatar.url|default:'/media/avatars/default.jpg' }}" 
-                        alt="Avatar" 
-                        class="rounded-circle" 
-                        width="40" 
-                        height="40">
-                </li>
+                    <li class="nav-item">
+                        <img src="{{ user.profile.avatar.url|default:'/media/avatars/default.jpg' }}" 
+                            alt="Avatar" 
+                            class="rounded-circle" 
+                            width="40" 
+                            height="40">
+                    </li>
                 {% endif %}
             </ul>
             <div class="ms-auto">
@@ -126,8 +125,7 @@
     <!-- Contenedor principal -->
     <div class="container mt-5 pt-4">  
         <h1 class="mb-4">
-            {% block content_title %}
-            {% endblock content_title %}
+            {% block content_title %}{% endblock content_title %}
         </h1>
         {% block content %} 
         {% endblock content %}
