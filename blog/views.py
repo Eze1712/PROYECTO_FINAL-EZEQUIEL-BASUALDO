@@ -233,17 +233,16 @@ class AlbumCreateView(CreateView):
 class AlbumUpdateView(UpdateView):
     model = Album
     template_name = 'blog/album_update.html'
-    fields = ['nombre', 'descripcion', 'genero', 'autor_album']
+    fields = ['nombre', 'historia', 'genero', 'autor_album']
     success_url = reverse_lazy('blog:album_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         album = self.get_object()
 
-        # Verificar si el usuario es el autor del álbum
-        if album.autor_album != self.request.user:
+        if album.autor != self.request.user:
             context['error_message'] = "No tienes permiso para editar este álbum."
-            context['form'] = None  # Deshabilitamos el formulario si no tiene permisos
+            context['form'] = None  
             return context
         
         return context
@@ -255,6 +254,7 @@ class AlbumUpdateView(UpdateView):
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
+
 
 
 # Permite eliminar un álbum existente
