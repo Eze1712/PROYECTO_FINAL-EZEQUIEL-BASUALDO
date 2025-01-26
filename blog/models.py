@@ -48,3 +48,17 @@ class Leyenda(models.Model):
 
     def __str__(self):
         return self.nombre
+
+# ===================================== ALBUMES =====================================   
+# Modelo para Álbum
+class Album(models.Model):
+    nombre = models.CharField(max_length=100)
+    fecha_lanzamiento = models.DateField()  
+    genero = models.CharField(max_length=50) 
+    autor_album = models.CharField(max_length=100) 
+    historia = models.TextField()  
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_autor')  
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  
+
+    def __str__(self):
+        return self.nombre

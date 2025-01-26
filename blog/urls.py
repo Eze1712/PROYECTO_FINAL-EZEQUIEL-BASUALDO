@@ -10,8 +10,9 @@ urlpatterns = [
     path("comentario/create/<int:post_id>/", views.comentario_create, name="comentario_create"),
     path('leyendas/', views.leyenda_list, name='leyenda_list'),
     path('leyendas/create/', views.leyenda_create, name='leyenda_create'), 
-    path('leyendas/<int:pk>/', views.LeyendaDetailView.as_view(), name='leyenda_detail'),  # Detalle de una leyenda
-    path('leyendas/<int:pk>/update/', views.LeyendaUpdateView.as_view(), name='leyenda_update'),  # Actualizar una leyenda
-    path('leyendas/<int:pk>/delete/', views.LeyendaDeleteView.as_view(), name='leyenda_delete'),  # Eliminar una leyenda
-    
+    path('leyendas/<int:pk>/', views.LeyendaDetailView.as_view(), name='leyenda_detail'),  
+    path('leyendas/<int:pk>/update/', views.LeyendaUpdateView.as_view(), name='leyenda_update'),  
+    path('leyendas/<int:pk>/delete/', views.LeyendaDeleteView.as_view(), name='leyenda_delete'),
+    path('albums/', views.album_list, name='album_list'),  
+    path('create-album/', views.album_create, name='album_create'),  
 ]

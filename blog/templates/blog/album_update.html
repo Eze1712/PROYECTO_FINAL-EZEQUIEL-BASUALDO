@@ -1,0 +1,28 @@
+{% extends "Main/base.html" %}
+
+{% block title %}Editar Álbum{% endblock title %}
+
+{% block content_title %}Editar Álbum{% endblock content_title %}
+
+{% block content %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Editar Álbum: {{ album.nombre }}</h2>
+        </div>
+        <div class="card-body">
+            {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error_message }}
+                </div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <a href="{% url 'blog:album_list' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

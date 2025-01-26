@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Comentario, Leyenda
+from .models import Album, Post, Comentario, Leyenda 
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -24,3 +24,10 @@ class LeyendaForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField(label="Buscar", max_length=100)
+
+
+#=================================== ALBUMES FORM ===============================================
+class AlbumForm(forms.ModelForm):
+    class Meta:
+        model = Album
+        fields = ['nombre', 'fecha_lanzamiento', 'genero', 'historia', 'autor_album']

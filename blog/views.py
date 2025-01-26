@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required  
-from .models import Post, Comentario, Leyenda
-from .forms import PostForm, ComentarioForm, LeyendaForm
+from .models import Post, Comentario, Leyenda, Album
+from .forms import *
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.db.models import Q
@@ -178,8 +178,101 @@ class LeyendaDeleteView(DeleteView):
         return super().post(request, *args, **kwargs)
 
 
+#====================================== ALBUMES VISTAS =========================================
+# Vista de creación de álbumes
+def album_create(request):
+    if request.method == "POST":
+        form = AlbumForm(request.POST)
+        if form.is_valid():
+            album = form.save(commit=False)
+            album.autor_album = request.user  
+            album.save()
+            return redirect('blog:album_list')  
+    else:
+        form = AlbumForm()
+
+    return render(request, 'blog/album_create.html', {'form': form})
 
 
+# Vista de lista de albumes
+def album_list(request):
+    albums = Album.objects.all()  # Obtener todos los álbumes
+    return render(request, 'blog/album_list.html', {'albums': albums})
 
 
+#====================================== CRUD PARA ÁLBUMES =========================================
+# Lista todos los álbumes creados
+class AlbumListView(ListView):
+    model = Album
+    template_name = 'blog/album_list.html'
+    context_object_name = 'albums'
 
+
+# Muestra los detalles de un álbum específico
+class AlbumDetailView(DetailView):
+    model = Album
+    template_name = 'blog/album_detail.html'
+    context_object_name = 'album'
+
+
+# Permite crear un nuevo álbum
+class AlbumCreateView(CreateView):
+    model = Album
+    template_name = 'blog/album_create.html'
+    fields = ['nombre', 'descripcion', 'genero', 'autor_album']
+    success_url = reverse_lazy('blog:album_list')
+
+
+# Permite actualizar un álbum existente
+class AlbumUpdateView(UpdateView):
+    model = Album
+    template_name = 'blog/album_update.html'
+    fields = ['nombre', 'descripcion', 'genero', 'autor_album']
+    success_url = reverse_lazy('blog:album_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        album = self.get_object()
+
+        # Verificar si el usuario es el autor del álbum
+        if album.autor_album != self.request.user:
+            context['error_message'] = "No tienes permiso para editar este álbum."
+            context['form'] = None  # Deshabilitamos el formulario si no tiene permisos
+            return context
+        
+        return context
+
+    def form_valid(self, form):
+        album = form.save(commit=False)
+        album.save()
+        return redirect(self.success_url)
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+# Permite eliminar un álbum existente
+class AlbumDeleteView(DeleteView):
+    model = Album
+    template_name = 'blog/album_delete.html'
+    context_object_name = 'album'
+    success_url = reverse_lazy('blog:album_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        album = self.get_object()
+
+        # Verificar si el usuario es el autor del álbum
+        if album.autor_album != self.request.user:
+            context['error_message'] = "No tienes permiso para eliminar este álbum."
+            return context
+        
+        return context
+
+    def post(self, request, *args, **kwargs):
+        album = self.get_object()
+
+        if album.autor_album != request.user:
+            return redirect('blog:album_list')
+
+        return super().post(request, *args, **kwargs)

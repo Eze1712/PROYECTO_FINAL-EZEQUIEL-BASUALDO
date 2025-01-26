@@ -1,0 +1,35 @@
+{% extends "Main/base.html" %}
+{% load static %}
+
+<title>
+    {% block title %}Confirmar eliminación{% endblock %}
+</title>
+
+{% block content_title %}Confirmar eliminación del Álbum{% endblock content_title %}
+
+{% block content %}
+    {% if error_message %}
+        <div class="alert alert-danger">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>{{ album.nombre }}</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Género:</strong> {{ album.genero }}</p>
+            <p><strong>Descripción:</strong></p>
+            <p>{{ album.descripcion }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{% url 'blog:album_list' %}" class="btn btn-secondary">Volver a la lista</a>
+            <a href="{% url 'blog:album_update' album.pk %}" class="btn btn-warning">Editar</a>
+            <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
