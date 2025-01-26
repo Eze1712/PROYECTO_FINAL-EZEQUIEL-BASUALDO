@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from .forms import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+
 
 
 
@@ -39,6 +41,8 @@ def register(request):
 
 
 # ===================== EDITAR USUARIO =========================================
+User = get_user_model()  # Usar el modelo de usuario personalizado
+
 @login_required
 def editarPerfil(request):
     usuario = request.user
@@ -52,10 +56,14 @@ def editarPerfil(request):
         profile_form = ProfileEditForm(request.POST, request.FILES, instance=perfil)
 
         if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Perfil actualizado correctamente.')
+            # Si el formulario de usuario es válido y el de perfil también
+            if user_form.cleaned_data.get('password1'):
+                usuario.set_password(user_form.cleaned_data['password1'])  # Cambiar la contraseña del usuario
+            user_form.save()  # Guardar los cambios en el usuario
+            profile_form.save()  # Guardar los cambios en el perfil
+            messages.success(request, 'Perfil y contraseña actualizados correctamente.')
             return redirect('Main:index')
+
     else:
         user_form = UserEditForm(instance=usuario)
         profile_form = ProfileEditForm(instance=perfil)
