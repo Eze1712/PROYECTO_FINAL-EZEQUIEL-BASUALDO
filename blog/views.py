@@ -126,8 +126,29 @@ class LeyendaCreateView(CreateView):
 class LeyendaUpdateView(UpdateView):
     model = Leyenda
     template_name = 'blog/leyenda_update.html'
-    fields = ['nombre', 'fecha_nacimiento', 'genero', 'historia']  
-    success_url = reverse_lazy('blog:leyenda_list')  
+    fields = ['nombre', 'fecha_nacimiento', 'genero', 'historia']
+    success_url = reverse_lazy('blog:leyenda_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        leyenda = self.get_object()
+
+        # Verificar si el usuario es el autor de la leyenda
+        if leyenda.autor != self.request.user:
+            context['error_message'] = "No tienes permiso para editar esta leyenda."
+            # Al no permitir editar, deshabilitamos el formulario
+            context['form'] = None
+            return context
+        
+        return context
+
+    def form_valid(self, form):
+        leyenda = form.save(commit=False)
+        leyenda.save()
+        return redirect(self.success_url)
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))  
 
 # Permite eliminar una leyenda existente
 class LeyendaDeleteView(DeleteView):
