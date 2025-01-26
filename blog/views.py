@@ -7,9 +7,12 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 # ============================= PUBLICACIONES(POSTS)=========================================================
+@login_required  
 def post_list(request):
     query = request.GET.get('q', '')
     if query:
@@ -85,10 +88,13 @@ def comentario_create(request, post_id):
 
 # ========================VISTA PARA LEYENDAS=========================================================
 # Lista todas las leyendas creadas
-class LeyendaListView(ListView):
+class LeyendaListView(LoginRequiredMixin, ListView):
     model = Leyenda
     template_name = 'blog/leyenda_list.html'
     context_object_name = 'leyendas'
+
+    # Puedes agregar un mensaje personalizado si lo deseas
+    login_url = '/login/'  # Redirige a la página de login si el usuario no está autenticado
 
 # Muestra los detalles de una leyenda específica
 class LeyendaDetailView(DetailView):
@@ -170,10 +176,11 @@ class LeyendaDeleteView(DeleteView):
 
 #====================================== ALBUMES VISTAS =========================================
 # Lista todos los álbumes creados
-class AlbumListView(ListView):
+class AlbumListView(LoginRequiredMixin, ListView):
     model = Album
     template_name = 'blog/album_list.html'
     context_object_name = 'albums'
+    login_url = '/login/'  # Redirige a la página de login si el usuario no está autenticado
 
 
 # Muestra los detalles de un álbum específico
