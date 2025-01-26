@@ -181,11 +181,11 @@ class LeyendaDeleteView(DeleteView):
 #====================================== ALBUMES VISTAS =========================================
 # Vista de creación de álbumes
 def album_create(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = AlbumForm(request.POST)
         if form.is_valid():
             album = form.save(commit=False)
-            album.autor_album = request.user  
+            album.usuario = request.user  
             album.save()
             return redirect('blog:album_list')  
     else:
@@ -219,8 +219,14 @@ class AlbumDetailView(DetailView):
 class AlbumCreateView(CreateView):
     model = Album
     template_name = 'blog/album_create.html'
-    fields = ['nombre', 'descripcion', 'genero', 'autor_album']
+    fields = ['nombre', 'fecha_lanzamiento', 'genero', 'autor_album', 'historia']
     success_url = reverse_lazy('blog:album_list')
+
+    def form_valid(self, form):
+        album = form.save(commit=False)
+        album.autor = self.request.user  # Asignar el autor automáticamente al usuario actual
+        album.save()
+        return redirect(self.success_url)
 
 
 # Permite actualizar un álbum existente

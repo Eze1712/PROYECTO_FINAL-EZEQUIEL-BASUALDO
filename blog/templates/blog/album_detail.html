@@ -14,10 +14,12 @@
         </div>
         <div class="card-body">
             <p><strong>Género:</strong> {{ album.genero }}</p>
-            <p><strong>Descripción:</strong></p>
-            <p>{{ album.descripcion }}</p>
+            <p><strong>Fecha de lanzamiento:</strong> {{ album.fecha_lanzamiento }}</p>
+            <p><strong>Autor del álbum:</strong> {{ album.autor_album }}</p>
+            <p><strong>Historia:</strong></p>
+            <p>{{ album.historia }}</p>
         </div>
-        <!-- Mostrar el autor del álbum -->
+        <!-- Mostrar el autor -->
         <div class="card-footer">
             <p><strong>Autor:</strong> {{ album.autor.username }}</p>
         </div>

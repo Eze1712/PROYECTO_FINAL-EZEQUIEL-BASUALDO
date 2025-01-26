@@ -30,4 +30,4 @@ class SearchForm(forms.Form):
 class AlbumForm(forms.ModelForm):
     class Meta:
         model = Album
-        fields = ['nombre', 'fecha_lanzamiento', 'genero', 'historia', 'autor_album']
+        fields = ['nombre', 'fecha_lanzamiento', 'genero', 'autor_album', 'historia']

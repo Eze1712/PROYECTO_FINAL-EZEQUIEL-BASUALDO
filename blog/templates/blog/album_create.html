@@ -1,15 +1,14 @@
-{% extends "Main/base.html" %}
+{% extends 'Main/base.html' %}
 
-{% block title %}
-  Crear Álbum
-{% endblock title %}
+{% block title %}Crear Álbum{% endblock title %}
+
+{% block content_title %}Crear un nuevo álbum{% endblock content_title %}
 
 {% block content %}
-  <h2>Crear un nuevo álbum</h2>
-  
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Crear Álbum</button>
-  </form>
-{% endblock %}
+    <form method="POST" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar Álbum</button>
+    </form>
+    <a href="{% url 'blog:album_list' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
+{% endblock content %}

@@ -57,7 +57,7 @@ class Album(models.Model):
     genero = models.CharField(max_length=50) 
     autor_album = models.CharField(max_length=100) 
     historia = models.TextField()  
-    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_autor')  
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, default=1)  
     fecha_creacion = models.DateTimeField(auto_now_add=True)  
 
     def __str__(self):

@@ -14,5 +14,9 @@ urlpatterns = [
     path('leyendas/<int:pk>/update/', views.LeyendaUpdateView.as_view(), name='leyenda_update'),  
     path('leyendas/<int:pk>/delete/', views.LeyendaDeleteView.as_view(), name='leyenda_delete'),
     path('albums/', views.album_list, name='album_list'),  
-    path('create-album/', views.album_create, name='album_create'),  
+    path('create-album/', views.album_create, name='album_create'),
+    path('album/<int:pk>/', views.AlbumDetailView.as_view(), name='album_detail'),
+    path('album/<int:pk>/edit/', views.AlbumUpdateView.as_view(), name='album_update'),
+    path('album/<int:pk>/delete/', views.AlbumDeleteView.as_view(), name='album_delete'),
+
 ]
