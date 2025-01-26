@@ -40,6 +40,10 @@ class UserEditForm(UserChangeForm):
         model = User
         fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
 
+    def __init__(self, *args, **kwargs):
+        super(UserEditForm, self).__init__(*args, **kwargs)
+        self.fields['password'] = forms.CharField(widget=forms.HiddenInput(), required=False)
+
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
@@ -47,3 +51,4 @@ class UserEditForm(UserChangeForm):
         if password1 and password1 != password2:
             raise forms.ValidationError("Las contraseñas no coinciden.")
         return password2
+
