@@ -102,6 +102,12 @@ class LeyendaCreateView(CreateView):
     fields = ['nombre', 'fecha_nacimiento', 'genero', 'historia']
     template_name = 'blog/leyenda_create.html'
     success_url = reverse_lazy('blog:leyenda_list')
+    
+    def form_valid(self, form):
+        leyenda = form.save(commit=False)
+        leyenda.autor = self.request.user  
+        leyenda.save()
+        return redirect(self.success_url)
 
 # Permite actualizar una leyenda existente
 class LeyendaUpdateView(UpdateView):
