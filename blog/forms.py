@@ -1,6 +1,8 @@
 from django import forms
 from .models import Album, Post, Comentario, Leyenda 
 
+
+#=================================== POST FORM ===============================================
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -12,11 +14,13 @@ class PostForm(forms.ModelForm):
         required=True  
     )
 
+#=================================== COMENTARIO FORM ===============================================
 class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ['contenido'] 
 
+#=================================== LEYENDA FORM ===============================================
 class LeyendaForm(forms.ModelForm):
     class Meta:
         model = Leyenda

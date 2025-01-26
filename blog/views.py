@@ -83,32 +83,11 @@ def comentario_create(request, post_id):
     return render(request, 'blog/comentario_create.html', {"form": form, "post": post})
 
 
-
-
-# ======================== LEYENDAS=========================================================
-def leyenda_create(request):
-    if request.method == "POST":
-        form = LeyendaForm(request.POST)
-        if form.is_valid():
-            leyenda = form.save(commit=False)  # No guarda inmediatamente
-            leyenda.usuario = request.user  # Asigna el usuario autenticado automáticamente
-            leyenda.save()  # Guarda la leyenda en la base de datos
-            return redirect('blog:leyenda_list')
-    else:
-        form = LeyendaForm()
-    return render(request, 'blog/leyenda_create.html', {'form': form})
-
-
-# Muestra una lista de leyendas creadas
-def leyenda_list(request):
-    leyendas = Leyenda.objects.all()
-    return render(request, 'blog/leyenda_list.html', {'leyendas': leyendas})
-
-# ========================CRUD PARA LEYENDAS=========================================================
+# ========================VISTA PARA LEYENDAS=========================================================
 # Lista todas las leyendas creadas
 class LeyendaListView(ListView):
     model = Leyenda
-    template_name = 'leyenda_list.html'
+    template_name = 'blog/leyenda_list.html'
     context_object_name = 'leyendas'
 
 # Muestra los detalles de una leyenda específica
@@ -120,9 +99,9 @@ class LeyendaDetailView(DetailView):
 # Permite crear una nueva leyenda
 class LeyendaCreateView(CreateView):
     model = Leyenda
-    template_name = 'leyenda_create.html'
-    fields = ['titulo', 'contenido', 'autor']
-    success_url = reverse_lazy('leyenda_list')
+    fields = ['nombre', 'fecha_nacimiento', 'genero', 'historia']
+    template_name = 'blog/leyenda_create.html'
+    success_url = reverse_lazy('blog:leyenda_list')
 
 # Permite actualizar una leyenda existente
 class LeyendaUpdateView(UpdateView):

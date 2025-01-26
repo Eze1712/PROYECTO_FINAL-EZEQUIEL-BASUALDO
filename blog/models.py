@@ -38,7 +38,7 @@ class Comentario(models.Model):
         return f"Comentario de {self.usuario.username if self.usuario else 'Anónimo'} en {self.post.titulo}"
 
 
-# Modelo para Leyenda
+# ===================================== ALBUMES =====================================
 class Leyenda(models.Model):
     nombre = models.CharField(max_length=100)
     fecha_nacimiento = models.DateField()
@@ -50,7 +50,6 @@ class Leyenda(models.Model):
         return self.nombre
 
 # ===================================== ALBUMES =====================================   
-# Modelo para Álbum
 class Album(models.Model):
     nombre = models.CharField(max_length=100)
     fecha_lanzamiento = models.DateField()  
