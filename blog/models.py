@@ -44,6 +44,7 @@ class Leyenda(models.Model):
     fecha_nacimiento = models.DateField()
     genero = models.CharField(max_length=50)
     historia = models.TextField()
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, default=1)  
 
     def __str__(self):
         return self.nombre

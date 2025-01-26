@@ -1,24 +1,35 @@
-{% extends 'Main/base.html' %}
+{% extends "Main/base.html" %}
+{% load static %}
 
-{% block title %}Eliminar Leyenda{% endblock title %}
+<title>
+    {% block title %}Confirmar eliminación{% endblock %}
+</title>
 
-{% block content_title %}Eliminar Leyenda{% endblock content_title %}
+{% block content_title %}Confirmar eliminación de la Leyenda{% endblock content_title %}
 
 {% block content %}
+    {% if error_message %}
+        <div class="alert alert-danger">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+    
     <div class="card mt-4">
         <div class="card-header">
-            <h2>¿Estás seguro de que deseas eliminar esta leyenda?</h2>
+            <h2>{{ leyenda.nombre }}</h2>
         </div>
         <div class="card-body">
-            <p><strong>Nombre:</strong> {{ leyenda.nombre }}</p>
             <p><strong>Género:</strong> {{ leyenda.genero }}</p>
-            <p><strong>Fecha de nacimiento:</strong> {{ leyenda.fecha_nacimiento }}</p>
-            <p><strong>Historia:</strong> {{ leyenda.historia }}</p>
-
-            <form method="post" class="mt-4">
+            <p><strong>Fecha de Nacimiento:</strong> {{ leyenda.fecha_nacimiento }}</p>
+            <p><strong>Historia:</strong></p>
+            <p>{{ leyenda.historia }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{% url 'blog:leyenda_list' %}" class="btn btn-secondary">Volver a la lista</a>
+            <a href="{% url 'blog:leyenda_update' leyenda.pk %}" class="btn btn-warning">Editar</a>
+            <form method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Eliminar</button>
-                <a href="{% url 'blog:leyenda_list' %}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>

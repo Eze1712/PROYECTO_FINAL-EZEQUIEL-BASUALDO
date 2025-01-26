@@ -13,6 +13,12 @@
   <p><strong>{{ object.titulo }}</strong></p>
   <p>{{ object.contenido }}</p>
 
+  {% if error_message %}
+    <div class="alert alert-danger">
+      <p>{{ error_message }}</p>
+    </div>
+  {% endif %}
+
   <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Eliminar</button>

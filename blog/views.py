@@ -5,6 +5,8 @@ from .forms import PostForm, ComentarioForm, LeyendaForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.db.models import Q
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 
 # Muestra una lista de publicaciones
@@ -79,8 +81,26 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('blog:post_list')
-    
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        
+        if post.autor != self.request.user:
+            context['error_message'] = "No tienes permiso para eliminar este post."
+            return context
+        
+        return context
+
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
+        
+        if post.autor != request.user:
+            return redirect('blog:post_list')
+        
+        return super().post(request, *args, **kwargs)
+
+    
 
 #CRUD PARA LEYENDAS
 # Lista todas las leyendas creadas
@@ -113,8 +133,27 @@ class LeyendaUpdateView(UpdateView):
 class LeyendaDeleteView(DeleteView):
     model = Leyenda
     template_name = 'blog/leyenda_delete.html'
-    context_object_name = 'leyenda'  
+    context_object_name = 'leyenda'
     success_url = reverse_lazy('blog:leyenda_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        leyenda = self.get_object()
+        
+        if leyenda.autor != self.request.user:
+            context['error_message'] = "No tienes permiso para eliminar esta leyenda."
+            return context
+        
+        return context
+
+    def post(self, request, *args, **kwargs):
+        leyenda = self.get_object()
+        
+        if leyenda.autor != request.user:
+            return redirect('blog:leyenda_list')
+        
+        return super().post(request, *args, **kwargs)
+
 
 
 

@@ -18,6 +18,10 @@
             <p><strong>Historia:</strong></p>
             <p>{{ leyenda.historia }}</p>
         </div>
+        <!-- Mostrar el autor debajo de la historia -->
+        <div class="card-footer">
+            <p><strong>Autor:</strong> {{ leyenda.autor.username }}</p>
+        </div>
         <div class="card-footer d-flex justify-content-between">
             <a href="{% url 'blog:leyenda_list' %}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{% url 'blog:leyenda_update' leyenda.pk %}" class="btn btn-warning">Editar</a>
