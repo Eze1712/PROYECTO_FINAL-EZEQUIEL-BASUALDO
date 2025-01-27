@@ -29,3 +29,14 @@ class AlbumAdmin(admin.ModelAdmin):
             queryset = queryset.filter(autor_album=request.user)
         return queryset
 
+
+@admin.register(Comentario)
+class ComentarioAdmin(admin.ModelAdmin):
+    list_display = ('usuario', 'post', 'fecha_creacion', 'contenido_corto')
+    list_filter = ('fecha_creacion', 'usuario', 'post')
+    search_fields = ('contenido', 'usuario__username', 'post__titulo')
+    ordering = ('-fecha_creacion',)
+
+    def contenido_corto(self, obj):
+        return obj.contenido[:50] + '...' if len(obj.contenido) > 50 else obj.contenido
+    contenido_corto.short_description = 'Contenido'
