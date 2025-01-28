@@ -5,7 +5,10 @@ Contraseña: **123**
 
 Soy Ezequiel Basualdo y presento mi proyecto final para la cursada de Python en Coder House, comisión 72690. Este proyecto consiste en un blog diseñado para que guitarristas y bajistas compartan experiencias, pensamientos y reflexiones sobre el mundo de la música, creando así una comunidad. Además, incluye secciones dedicadas a leyendas de la música y álbumes destacados, donde se muestra información relevante sobre artistas y discos históricos.
 
-El proyecto se desarrolló en un entorno virtual (venv) y utiliza Django con Python, HTML, CSS y Bootstrap, implementado en Visual Studio Code. Cuenta con dos aplicaciones: **blog** y **Main**. La aplicación *blog* incluye 14 plantillas HTML, mientras que *Main* cuenta con 6. Todos los templates heredan de `base.html`, excepto `register.html`, que hereda de `login.html`.
+El proyecto se desarrolló en un entorno virtual (venv) y utiliza Django con Python, HTML, CSS y Bootstrap, implementado en Visual Studio Code. Cuenta con dos aplicaciones: **blog** y **Main**. La aplicación *blog* incluye 14 plantillas HTML, mientras que *Main* cuenta con 6. Todos los templates heredan de `base.html`, excepto `register.html`, que hereda de `login.html` (login proviene de la aplicación Main). 
+
+Blog (blog) se basa en los códigos necesarios para darle imagen y funcionalidad a las publicaciones, leyendas y álbumes. Main (Main) se encarga de la estructura general del sitio web, así como las funcionalidades de registro, inicio de sesión y cierre de sesión.
+
 
 ## INSTALACIÓN: 
 El proyecto se desarrolló en un entorno virtual (venv) y utiliza Django con Python, HTML, CSS y Bootstrap. A continuación, se explican los pasos para instalarlo:
@@ -25,10 +28,6 @@ El proyecto se desarrolló en un entorno virtual (venv) y utiliza Django con Pyt
 7. Iniciar el servidor: python manage.py runserver
 
 
-
-
-
-
 ### Funcionalidades principales
 
 - La página principal muestra imágenes representativas (simulando contenido subido por los usuarios) y un menú de navegación. Desde este menú se puede acceder a:
@@ -42,10 +41,9 @@ El proyecto se desarrolló en un entorno virtual (venv) y utiliza Django con Pyt
 
 Este blog combina funcionalidad y diseño para fomentar la interacción y el intercambio de conocimiento entre músicos. ¡Espero que lo disfruten!
 
-# ---------------------------------------------------------------------------------------------------------------------
-
-
-# ==================================================================== BLOG =================================================================================
+##### ==================================================================== APPS ================================================================================
+                                                                    ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+##### ==================================================================== BLOG =================================================================================
 
 # ADMIN.PY
 
@@ -57,76 +55,117 @@ La aplicación **blog** cuenta con cuatro administradores personalizados que ges
 - **ComentarioAdmin**: Administra y muestra los datos de los comentarios en la vista de administración.
 
 
+# FORMS.PY
+
+La aplicación incluye varios formularios para manejar las distintas funcionalidades del blog:
+
+- **PostForm**: permite crear y editar publicaciones, solicitando datos como título, contenido, estado y categoría.  
+- **ComentarioForm**: facilita la creación de comentarios para las publicaciones, solicitando únicamente el contenido del comentario.  
+- **LeyendaForm**: permite registrar y editar leyendas (artistas) incluyendo nombre, fecha de nacimiento, género e historia.  
+- **SearchForm**: un formulario simple para realizar búsquedas en el sitio mediante una palabra clave.  
+- **AlbumForm**: permite crear y editar álbumes con datos como nombre, fecha de lanzamiento, género, autor y su historia.  
+
+
+
+# MODELS.PY
+
+- **Post**: Modelo para los posteos del blog. Cada post tiene un título, contenido, fecha de publicación, autor, estado (borrador o publicado) y categoría (guitarra o bajo).
+- **Comentario**: Modelo para los comentarios que los usuarios pueden dejar en los posts. Cada comentario está asociado a un usuario, contiene el contenido, la fecha de creación y se vincula al post correspondiente.
+- **Leyenda**: Modelo que representa a un artista legendario de la música. Cada leyenda tiene un nombre, fecha de nacimiento, género musical, una historia relacionada y un autor (usuario).
+- **Album**: Modelo que representa un álbum musical. Cada álbum tiene un nombre, fecha de lanzamiento, género musical, autor del álbum, historia relacionada y un autor (usuario) asociado.
+
+
+# URLS DEL PROYECTO
+
+- **Post**:
+  - **post_list**: Muestra una lista de todos los posts del blog.
+  - **post_create**: Permite crear un nuevo post en el blog.
+  - **post_delete**: Permite eliminar un post existente.
+  - **comentario_create**: Permite crear un comentario en un post específico.
+
+- **Leyendas**:
+  - **leyenda_list**: Muestra una lista de todas las leyendas (artistas).
+  - **leyenda_create**: Permite crear una nueva leyenda (artista).
+  - **leyenda_detail**: Muestra los detalles de una leyenda específica.
+  - **leyenda_update**: Permite actualizar la información de una leyenda.
+  - **leyenda_delete**: Permite eliminar una leyenda.
+
+- **Álbumes**:
+  - **album_list**: Muestra una lista de todos los álbumes.
+  - **album_create**: Permite crear un nuevo álbum.
+  - **album_detail**: Muestra los detalles de un álbum específico.
+  - **album_update**: Permite actualizar la información de un álbum.
+  - **album_delete**: Permite eliminar un álbum.
+
+
+# VISTAS DEL PROYECTO
+
+- **Post**:
+  - **post_list**: Muestra una lista de todos los posts del blog.
+  - **post_create**: Permite crear un nuevo post en el blog.
+  - **post_delete**: Permite eliminar un post existente.
+  - **comentario_create**: Permite crear un comentario en un post específico.
+
+- **Leyendas**:
+  - **leyenda_list**: Muestra una lista de todas las leyendas (artistas).
+  - **leyenda_create**: Permite crear una nueva leyenda (artista).
+  - **leyenda_detail**: Muestra los detalles de una leyenda específica.
+  - **leyenda_update**: Permite actualizar la información de una leyenda.
+  - **leyenda_delete**: Permite eliminar una leyenda.
+
+- **Álbumes**:
+  - **album_list**: Muestra una lista de todos los álbumes.
+  - **album_create**: Permite crear un nuevo álbum.
+  - **album_detail**: Muestra los detalles de un álbum específico.
+  - **album_update**: Permite actualizar la información de un álbum.
+  - **album_delete**: Permite eliminar un álbum.
+
+
+##### ==================================================================== MAIN =================================================================================
+
+# ADMIN.PY
+
+- **ProfileAdmin**:  
+  - Personaliza la vista del modelo `Profile` en el panel de administración de Django. Muestra los campos `user` y `avatar` en la lista de objetos `Profile` dentro del panel de administración.
 
 
 # FORMS.PY
 
 La aplicación posee 3 formularios personalizados para manejar usuarios y perfiles:
 
-- **CustomUserCreationForm**: permite registrar nuevos usuarios solicitando nombre, apellido, correo electrónico y contraseña. Al registrarse, automáticamente se crea un perfil asociado.
-
-- **ProfileEditForm**: facilita la edición del avatar del perfil de los usuarios, permitiendo que actualicen su imagen de perfil.
-
-- **UserEditForm**: permite modificar datos personales como nombre, apellido y correo electrónico. También da la opción de cambiar la contraseña.
+- **CustomUserCreationForm**: permite registrar nuevos usuarios solicitando nombre, apellido, correo electrónico y contraseña. Al registrarse, automáticamente se crea un perfil asociado.  
+- **ProfileEditForm**: facilita la edición del avatar del perfil de los usuarios, permitiendo que actualicen su imagen de perfil.  
+- **UserEditForm**: permite modificar datos personales como nombre, apellido y correo electrónico. También da la opción de cambiar la contraseña.  
 
 
 # MODELS.PY
 
-La aplicación cuenta con dos modelos principales que gestionan la información de los usuarios y sus perfiles:
+La aplicación define los siguientes modelos para gestionar usuarios y perfiles:
 
-- **CustomUser**: almacena datos básicos de los usuarios, como nombre de usuario, nombre, apellido, correo electrónico y contraseñas. Garantiza que los nombres de usuario y los correos sean únicos.
-
-- **Profile**: está vinculado a cada usuario mediante una relación uno a uno y permite almacenar un avatar personalizado. Si no se sube un avatar, se asigna una imagen por defecto.
-
+- **CustomUser**: representa una personalización del modelo de usuario. Incluye campos como nombre de usuario, nombre, apellido, correo electrónico y contraseñas.  
+- **Profile**: extiende la funcionalidad del usuario mediante un avatar, asociado a cada usuario registrado, con un valor predeterminado en caso de que no se cargue uno personalizado.  
 
 
+# URLS.PY
+
+La aplicación Main contiene las siguientes rutas:
+
+- **index**: vista principal de la aplicación, muestra la página de inicio.  
+- **login**: permite a los usuarios iniciar sesión mediante un formulario de autenticación.  
+- **logout**: cierra la sesión de los usuarios y redirige a la página principal.  
+- **register**: proporciona un formulario para registrar nuevos usuarios.  
+- **about_me**: muestra una página con información sobre el desarrollador o la aplicación.  
+- **editarPerfil**: permite a los usuarios editar su perfil, incluida la información personal.  
 
 
+# VIEWS.PY
+
+La aplicación Main incluye las siguientes vistas para manejar la funcionalidad del sitio web y la gestión de usuarios:
+
+- **index**: renderiza la página de inicio, ubicada en `Main/index.html`.  
+- **about_me**: muestra una página con información sobre el desarrollador o la aplicación, ubicada en `Main/about_me.html`.  
+- **register**: gestiona el registro de nuevos usuarios utilizando el formulario `CustomUserCreationForm`. Si el registro se realiza con exito, redirige a la página de inicio de sesión.  
+- **editarPerfil**: permite a los usuarios autenticados editar su información personal y actualizar su avatar mediante los formularios `UserEditForm` y `ProfileEditForm`. También incluye la funcionalidad para cambiar la contraseña.  
 
 
-
-
-
-
-
-
-
-# Templates de blog:
-# comentario_create.html: Es el modulo donde se establece el form para agregar comentarios a las publicaciones. Se puede acceder a través de Blog en la pagina inicial.
-
-# leyenda_create.html: Es el modulo donde se establece el form para agregar Leyendas al sitio web, unicamente por administradores registrado por el momento. Se puede acceder a través de Leyendas en la pagina inicial.
-
-# leyenda_list.html : muestra la lista de las leyendas agregadas em el mismo sitio que el de leyenda_create
-
-# post_create.html: Es el modulo donde se establece el form para agregar publicaciones al sitio web. Se puede acceder a través de Blog en la pagina inicial.
-
-# post_list.html: Es el módulo donde se agregan los blogs creados, y se puede acceder igual que post_create.html.
-
-
-
-# Templates de Main: 
-
-# base.html: se usa como el template padre, donde se establecen los metadatos en UTF-8, se aplican los bootstraps, y se establecen los links de navegación.
-
-# index.html: utiliza al igual que todos los demas templates, el base.html como template padre, y se establecen los links de navegación, y se agrega un carousel con imagenes de las leyendas agregadas al sitio web.
-
-
-# -----------------------------------------------------------------------------------------------------------------
-
-
-# admin.py: solo se encuentra en la app blog, se utiliza para establecer los formularios que se puden trabajar dentro de la vista admin, siendo estos blogs y Leyendas.
-
-
-
-# -----------------------------------------------------------------------------------------------------------------
-
-# models.py: se crean los modelos de Posts, Comentarios y Leyendas. Cada uno tiene su formulario en forms.py
-
-# -----------------------------------------------------------------------------------------------------------------
-
-# urls.py: Este código define las URLs (direcciones web) para el blog. Estas son "/post/list", "/post/create", "/comentario/create/int:post_id/", "/leyendas/", "/leyendas/create/"
-
-# -----------------------------------------------------------------------------------------------------------------
-
-# views.py: Este código define las vistas para el blog. Esta gestiona la lógica para el servidor, es decir, lo que no vemos.En este caso, se definen vistas para listar publicaciones, crear publicaciones, crear comentarios, listar leyendas y crear leyendas. También se incluye una vista para buscar contenido en el blog. Cada vista utiliza los modelos y formularios definidos en models.py y forms.py, respectivamente, para interactuar con la base de datos y manejar la lógica de la aplicación.
 

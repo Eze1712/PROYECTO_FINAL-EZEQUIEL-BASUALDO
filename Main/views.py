@@ -41,7 +41,7 @@ def register(request):
 
 
 # ===================== EDITAR USUARIO =========================================
-User = get_user_model()  # Usar el modelo de usuario personalizado
+User = get_user_model()  
 
 @login_required
 def editarPerfil(request):
