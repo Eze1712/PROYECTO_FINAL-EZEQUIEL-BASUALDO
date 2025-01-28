@@ -27,8 +27,12 @@ El proyecto se desarrolló en un entorno virtual (venv) y utiliza Django con Pyt
 6. Cargar archivos estáticos: python manage.py collectstatic
 7. Iniciar el servidor: python manage.py runserver
 
+## COSAS A TENER EN CUENTA
+- El video del proyecto se encuentra en la carpeta "VIDEO PRESENTACION"
+- El proyecto cuenta con la carpeta static para las imagenes de la págima web y la carpeta media para las imagenes subidas por los usuarios.
+- El archivo requirements. txt contiene las dependencias necesarias para ejecutar el proyecto.
 
-### Funcionalidades principales
+### FUNCIONALIDADES PRINCIPALES
 
 - La página principal muestra imágenes representativas (simulando contenido subido por los usuarios) y un menú de navegación. Desde este menú se puede acceder a:
   - **Blogs**: Crear publicaciones para compartir experiencias musicales.
