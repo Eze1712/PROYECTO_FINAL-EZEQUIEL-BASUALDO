@@ -1,5 +1,7 @@
 {% extends "Main/base.html" %}
 
+{% load static %}  <!-- Carga de la etiqueta static -->
+
 {% block title %}
     Inicio
 {% endblock title %}
@@ -14,15 +16,15 @@
     <div class="carousel-inner">
     
       <div class="carousel-item active">
-        <img class="d-block w-100" src="https://musiquiatra.s3.us-east-1.amazonaws.com/upload/monthly_2019_03/guitarra-gibson-sg-standard-2000-made-in-usa-cherry-D_NQ_NP_874236-MLA29033924743_122018-F.jpg.d3ebf84d8d978d44236c2987c591963d.jpg" alt="First slide">
+        <img class="d-block w-100" src="{% static 'imagenes/gibson SG.jpg' %}" alt="First slide">
       </div>
     
       <div class="carousel-item">
-        <img class="d-block w-100" src="https://compasuno.com.ar/wp-content/uploads/2024/05/Bajo-Epiphone-Viola-Bass-4-Cuerdas-Usado-Impecable-MLA1257552158-5.jpg" alt="Second slide">
+        <img class="d-block w-100" src="{% static 'imagenes/Bajo viola.jpg' %}" alt="Second slide">
       </div>
       
       <div class="carousel-item">
-        <img class="d-block w-100" src="https://mariogomez.com.ar/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-02-at-13.52.05.jpeg" alt="Third slide">
+        <img class="d-block w-100" src="{% static 'imagenes/yamaha acustica.webp' %}" alt="Third slide">
       </div>
     </div>
     
